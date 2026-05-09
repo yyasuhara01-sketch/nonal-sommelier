@@ -6,9 +6,10 @@
     "build": "astro build",
     "preview": "astro preview"
   },
- "dependencies": {
+  "dependencies": {
     "astro": "^4.0.0",
     "contentful": "^10.0.0",
     "@astrojs/cloudflare": "^10.0.0",
     "@contentful/rich-text-html-renderer": "^16.0.0"
   }
+}
