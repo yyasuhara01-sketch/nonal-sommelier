@@ -1,0 +1,93 @@
+---
+import Layout from '../../components/Layout.astro';
+import { getBlogPost, getBlogPosts } from '../../lib/contentful.js';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+
+const { slug } = Astro.params;
+let post = null;
+try {
+  post = await getBlogPost(slug);
+} catch (e) {
+  post = null;
+}
+
+if (!post) {
+  return Astro.redirect('/reviews');
+}
+
+const bodyHtml = post.fields.body ? documentToHtmlString(post.fields.body) : '';
+const score = post.fields.score || 0;
+---
+<Layout title={`${post.fields.title} | ノンアル・ソムリエ`}>
+  <article class="container">
+    <div class="article-head">
+      <div class="meta-row">
+        <span class="tag">{post.fields.category || 'レビュー'}</span>
+        <span class="date">{new Date(post.sys.createdAt).toLocaleDateString('ja-JP')}</span>
+      </div>
+      <h1 class="article-title">{post.fields.title}</h1>
+      <div class="score-box">
+        <span class="score-label">ソムリエスコア</span>
+        <span class="score-num">{score}</span>
+        <span class="score-max">/ 5</span>
+        <div class="stars">
+          {[1,2,3,4,5].map(i => (
+            <span class={i <= score ? 's' : 'se'}></span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {post.fields.thumbnail && (
+      <div class="thumbnail">
+        <img src={`https:${post.fields.thumbnail.fields.file.url}`} alt={post.fields.title} />
+      </div>
+    )}
+
+    {post.fields.excerpt && (
+      <div class="excerpt">{post.fields.excerpt}</div>
+    )}
+
+    <div class="body" set:html={bodyHtml} />
+
+    <div class="back-link">
+      <a href="/reviews">← レビュー一覧に戻る</a>
+    </div>
+  </article>
+</Layout>
+
+<style>
+.container { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+.article-head { padding: 2.5rem 0 1.5rem; }
+.meta-row { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+.tag { font-size: 11px; color: #185FA5; background: #E6F1FB; padding: 4px 12px; border-radius: 20px; font-weight: 700; }
+.date { font-size: 12px; color: #aaa; }
+.article-title { font-size: 26px; font-weight: 700; color: #042C53; line-height: 1.5; margin-bottom: 1.25rem; }
+.score-box {
+  display: flex; align-items: center; gap: 10px;
+  background: #E6F1FB; border-radius: 12px; padding: 0.75rem 1.25rem;
+  border: 2px solid #B5D4F4; width: fit-content;
+}
+.score-label { font-size: 11px; color: #185FA5; font-weight: 700; }
+.score-num { font-size: 28px; font-weight: 700; color: #185FA5; }
+.score-max { font-size: 13px; color: #888; }
+.stars { display: flex; gap: 3px; }
+.s { width: 14px; height: 14px; background: #378ADD; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+.se { width: 14px; height: 14px; background: #B5D4F4; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+.thumbnail { margin: 1.5rem 0; border-radius: 16px; overflow: hidden; }
+.thumbnail img { width: 100%; max-height: 420px; object-fit: cover; }
+.excerpt {
+  background: #E6F1FB; border-left: 4px solid #378ADD;
+  border-radius: 0 8px 8px 0; padding: 1rem 1.25rem;
+  font-size: 14px; color: #185FA5; line-height: 1.8; margin-bottom: 2rem;
+}
+.body { font-size: 15px; line-height: 1.9; color: #2C2C2A; }
+.body h2 { font-size: 20px; font-weight: 700; color: #042C53; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #E6F1FB; }
+.body h3 { font-size: 17px; font-weight: 700; color: #185FA5; margin: 1.5rem 0 0.75rem; }
+.body p { margin-bottom: 1.25rem; }
+.body ul, .body ol { margin: 1rem 0 1.25rem 1.5rem; }
+.body li { margin-bottom: 0.5rem; }
+.back-link { margin: 3rem 0; }
+.back-link a { color: #378ADD; font-weight: 700; font-size: 14px; }
+.back-link a:hover { text-decoration: underline; }
+</style>

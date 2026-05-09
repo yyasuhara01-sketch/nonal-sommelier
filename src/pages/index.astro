@@ -1,0 +1,312 @@
+---
+import Layout from '../components/Layout.astro';
+import { getBlogPosts } from '../lib/contentful.js';
+
+let posts = [];
+try {
+  posts = await getBlogPosts();
+} catch (e) {
+  posts = [];
+}
+
+const latestPosts = posts.slice(0, 3);
+const pickupPosts = posts.slice(0, 2);
+
+const categories = [
+  { name: 'ノンアルワイン', slug: 'wine' },
+  { name: 'ノンアルビール', slug: 'beer' },
+  { name: 'カクテル系', slug: 'cocktail' },
+  { name: 'スマドリ情報', slug: 'smartdrinking' },
+];
+---
+<Layout>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-deco1"></div>
+    <div class="hero-deco2"></div>
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-line"></span>
+          SOMMELIER'S HONEST REVIEW
+          <span class="eyebrow-line"></span>
+        </div>
+        <h1 class="hero-title">ノンアルを、もっと<br><span class="accent">真剣に</span>選ぼう。</h1>
+        <p class="hero-desc">資格を持つソムリエが、味・香り・成分を<br>本音で評価するノンアルドリンク専門メディア。</p>
+        <div class="hero-tags">
+          <span class="htag"># ノンアルワイン</span>
+          <span class="htag"># ノンアルビール</span>
+          <span class="htag"># スマドリ</span>
+          <span class="htag"># 添加物チェック</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="180">
+          <rect x="30" y="30" width="28" height="8" rx="4" fill="#185FA5"/>
+          <rect x="26" y="38" width="36" height="80" rx="10" fill="#185FA5"/>
+          <rect x="30" y="55" width="28" height="4" rx="2" fill="#B5D4F4" opacity="0.5"/>
+          <rect x="29" y="74" width="30" height="24" rx="4" fill="#fff" opacity="0.9"/>
+          <rect x="32" y="77" width="24" height="2" rx="1" fill="#185FA5" opacity="0.5"/>
+          <rect x="34" y="81" width="20" height="1.5" rx="0.75" fill="#378ADD" opacity="0.4"/>
+          <rect x="82" y="50" width="34" height="68" rx="8" fill="#378ADD"/>
+          <rect x="82" y="50" width="34" height="12" rx="8" fill="#0C447C"/>
+          <rect x="82" y="108" width="34" height="10" rx="8" fill="#0C447C"/>
+          <rect x="87" y="68" width="22" height="30" rx="4" fill="#fff" opacity="0.15"/>
+          <path d="M130 40 L148 40 L144 80 L136 80 Z" fill="#E6F1FB" opacity="0.8"/>
+          <path d="M132 58 L146 58 L144 80 L136 80 Z" fill="#85B7EB" opacity="0.5"/>
+          <rect x="136" y="80" width="8" height="18" rx="2" fill="#B5D4F4" opacity="0.7"/>
+          <rect x="130" y="98" width="20" height="4" rx="2" fill="#B5D4F4" opacity="0.6"/>
+          <circle cx="55" cy="25" r="4" fill="#B5D4F4" opacity="0.4"/>
+          <circle cx="65" cy="18" r="3" fill="#85B7EB" opacity="0.3"/>
+          <circle cx="105" cy="42" r="5" fill="#B5D4F4" opacity="0.3"/>
+          <circle cx="115" cy="35" r="3" fill="#85B7EB" opacity="0.25"/>
+          <circle cx="145" cy="32" r="3.5" fill="#B5D4F4" opacity="0.25"/>
+          <rect x="130" y="115" width="56" height="44" rx="12" fill="#fff" stroke="#B5D4F4" stroke-width="1.5"/>
+          <text x="158" y="133" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#185FA5">4.5</text>
+          <text x="158" y="146" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">ソムリエスコア</text>
+          <text x="158" y="156" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#378ADD">★★★★★</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ribbon -->
+  <div class="ribbon">
+    {categories.map(cat => (
+      <span class="ribbon-item">
+        <span class="ribbon-gem"></span>
+        {cat.name}
+      </span>
+    ))}
+    <span class="ribbon-item"><span class="ribbon-gem"></span>クラフト系</span>
+    <span class="ribbon-item"><span class="ribbon-gem"></span>添加物チェック</span>
+  </div>
+
+  <!-- Latest Reviews -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-en">Latest Review</span>
+      <span class="section-ja">最新レビュー</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="cards">
+      {latestPosts.length > 0 ? latestPosts.map(post => (
+        <a href={`/posts/${post.fields.slug}`} class="card">
+          <div class="card-img">
+            {post.fields.thumbnail
+              ? <img src={`https:${post.fields.thumbnail.fields.file.url}`} alt={post.fields.title} />
+              : <div class="card-img-placeholder"></div>
+            }
+          </div>
+          <div class="card-body">
+            <span class="card-tag">{post.fields.category || 'レビュー'}</span>
+            <div class="stars">
+              {[1,2,3,4,5].map(i => (
+                <span class={i <= (post.fields.score || 0) ? 's' : 'se'}></span>
+              ))}
+            </div>
+            <h3 class="card-title">{post.fields.title}</h3>
+            <div class="card-bottom">
+              <span class="card-meta">{new Date(post.sys.createdAt).toLocaleDateString('ja-JP')}</span>
+              <span class="card-score">{post.fields.score || '-'} / 5</span>
+            </div>
+          </div>
+        </a>
+      )) : (
+        <p class="no-posts">記事を準備中です。お楽しみに！</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Sommelier's Pick -->
+  {pickupPosts.length > 0 && (
+    <section class="pickup-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-en">Sommelier's Pick</span>
+          <span class="section-ja">ソムリエおすすめ</span>
+          <span class="section-line" style="background:#B5D4F4;"></span>
+        </div>
+        <div class="pickup-list">
+          {pickupPosts.map((post, i) => (
+            <a href={`/posts/${post.fields.slug}`} class="pickup-card">
+              <span class="pickup-num">0{i + 1}</span>
+              <div class="pickup-img">
+                {post.fields.thumbnail
+                  ? <img src={`https:${post.fields.thumbnail.fields.file.url}`} alt={post.fields.title} />
+                  : <div class="pickup-img-placeholder"></div>
+                }
+              </div>
+              <div class="pickup-text">
+                <span class="pickup-tag">{post.fields.category || 'レビュー'}</span>
+                <p class="pickup-title">{post.fields.title}</p>
+              </div>
+              <span class="pickup-score">★ {post.fields.score || '-'}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- About -->
+  <section class="about-section container">
+    <div class="section-head">
+      <span class="section-en">About</span>
+      <span class="section-ja">このサイトについて</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="about-card">
+      <div class="avatar">Y</div>
+      <div class="about-text">
+        <p class="about-name">YUKA</p>
+        <div class="about-certs">
+          <span class="cert">ワインエキスパート</span>
+          <span class="cert">食品系資格保有</span>
+          <span class="cert">製菓衛生師</span>
+        </div>
+        <p class="about-desc">複数の専門資格を持つソムリエが、ノンアルコールドリンクを味・香り・成分すべての観点から正直にレビュー。「本当に美味しいノンアル」だけをお届けします。</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.hero {
+  background: #fff;
+  padding: 3rem 0 2.5rem;
+  border-bottom: 3px solid #E6F1FB;
+  position: relative;
+  overflow: hidden;
+}
+.hero-deco1 {
+  position: absolute; top: -40px; right: 280px;
+  width: 200px; height: 200px;
+  background: #E6F1FB; border-radius: 50%;
+}
+.hero-deco2 {
+  position: absolute; bottom: -30px; right: 80px;
+  width: 120px; height: 120px;
+  background: #f0f7ff; border-radius: 50%;
+}
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+.hero-text { flex: 1; }
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: #378ADD; font-weight: 700;
+  letter-spacing: 0.18em; margin-bottom: 0.75rem;
+}
+.eyebrow-line { width: 24px; height: 2px; background: #378ADD; border-radius: 2px; }
+.hero-title {
+  font-size: 28px; font-weight: 700; color: #042C53;
+  line-height: 1.45; margin-bottom: 0.75rem;
+}
+.hero-title .accent { color: #378ADD; }
+.hero-desc { font-size: 13px; color: #5F5E5A; line-height: 1.9; margin-bottom: 1rem; }
+.hero-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.htag {
+  font-size: 11px; background: #E6F1FB; color: #185FA5;
+  padding: 4px 12px; border-radius: 20px; font-weight: 700;
+}
+.hero-visual { flex-shrink: 0; }
+
+.ribbon {
+  background: #185FA5; padding: 0.65rem 2rem;
+  display: flex; gap: 1.5rem; overflow-x: auto;
+}
+.ribbon-item {
+  font-size: 11px; color: #B5D4F4; font-weight: 700;
+  white-space: nowrap; display: flex; align-items: center; gap: 6px;
+}
+.ribbon-gem {
+  width: 7px; height: 7px; background: #85B7EB;
+  transform: rotate(45deg); border-radius: 1px; flex-shrink: 0;
+}
+
+.section { padding: 2.5rem 0; }
+.section-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;
+}
+.section-en { font-size: 20px; font-weight: 700; color: #185FA5; }
+.section-ja { font-size: 11px; color: #888; }
+.section-line { flex: 1; height: 2px; background: #E6F1FB; border-radius: 2px; }
+
+.cards {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+}
+.card {
+  background: #fff; border: 2px solid #E6F1FB; border-radius: 16px;
+  overflow: hidden; display: block; transition: transform 0.15s;
+}
+.card:hover { transform: translateY(-2px); }
+.card-img { height: 140px; overflow: hidden; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; }
+.card-img-placeholder { width: 100%; height: 100%; background: #E6F1FB; }
+.card-body { padding: 0.9rem; }
+.card-tag {
+  font-size: 10px; color: #185FA5; background: #E6F1FB;
+  padding: 3px 10px; border-radius: 20px; font-weight: 700;
+}
+.stars { display: flex; gap: 2px; margin: 6px 0; }
+.s { width: 11px; height: 11px; background: #378ADD; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+.se { width: 11px; height: 11px; background: #B5D4F4; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+.card-title { font-size: 13px; font-weight: 700; color: #042C53; line-height: 1.6; margin-bottom: 6px; }
+.card-bottom { display: flex; justify-content: space-between; align-items: center; }
+.card-meta { font-size: 10px; color: #aaa; }
+.card-score { font-size: 13px; font-weight: 700; color: #185FA5; }
+.no-posts { color: #888; font-size: 14px; grid-column: 1/-1; text-align: center; padding: 2rem; }
+
+.pickup-section { background: #E6F1FB; padding: 2.5rem 0; }
+.pickup-list { display: flex; flex-direction: column; gap: 10px; }
+.pickup-card {
+  background: #fff; border: 2px solid #B5D4F4; border-radius: 14px;
+  padding: 1rem 1.25rem; display: flex; gap: 1rem; align-items: center;
+  transition: transform 0.15s;
+}
+.pickup-card:hover { transform: translateX(4px); }
+.pickup-num { font-size: 32px; font-weight: 700; color: #B5D4F4; flex-shrink: 0; width: 42px; }
+.pickup-img { width: 56px; height: 56px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+.pickup-img img { width: 100%; height: 100%; object-fit: cover; }
+.pickup-img-placeholder { width: 100%; height: 100%; background: #E6F1FB; }
+.pickup-text { flex: 1; }
+.pickup-tag {
+  font-size: 10px; color: #185FA5; background: #E6F1FB;
+  padding: 2px 8px; border-radius: 20px; font-weight: 700;
+  display: inline-block; margin-bottom: 4px;
+}
+.pickup-title { font-size: 13px; font-weight: 700; color: #042C53; line-height: 1.5; }
+.pickup-score { font-size: 15px; font-weight: 700; color: #378ADD; flex-shrink: 0; }
+
+.about-section { padding: 2.5rem 0; }
+.about-card {
+  border: 2px solid #E6F1FB; border-radius: 16px; padding: 1.5rem;
+  display: flex; gap: 1.5rem; align-items: flex-start; background: #fff;
+}
+.avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #185FA5; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; color: #fff;
+  border: 3px solid #B5D4F4;
+}
+.about-name { font-size: 16px; font-weight: 700; color: #042C53; margin-bottom: 8px; }
+.about-certs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.cert {
+  font-size: 10px; background: #E6F1FB; color: #185FA5;
+  padding: 3px 10px; border-radius: 20px; font-weight: 700;
+}
+.about-desc { font-size: 13px; color: #5F5E5A; line-height: 1.9; }
+
+@media (max-width: 768px) {
+  .hero-inner { flex-direction: column; }
+  .hero-visual { display: none; }
+  .cards { grid-template-columns: 1fr; }
+  .nav a:not(.nav-cta) { display: none; }
+}
+</style>

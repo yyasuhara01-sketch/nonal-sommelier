@@ -1,0 +1,127 @@
+---
+const { title = 'ノンアル・ソムリエ | Nonal Sommelier' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="/" class="logo-wrap">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="15" fill="#E6F1FB"/>
+          <rect x="13" y="6" width="6" height="14" rx="3" fill="#185FA5"/>
+          <rect x="10" y="18" width="12" height="3" rx="1.5" fill="#378ADD"/>
+          <ellipse cx="16" cy="23" rx="5" ry="2" fill="#B5D4F4"/>
+          <circle cx="22" cy="10" r="2" fill="#378ADD" opacity="0.6"/>
+          <circle cx="24" cy="15" r="1.5" fill="#85B7EB" opacity="0.5"/>
+        </svg>
+        <div class="logo-text">
+          <span class="logo-main">Nonal Sommelier</span>
+          <span class="logo-sub">ノンアル・ソムリエ</span>
+        </div>
+      </a>
+      <nav class="nav">
+        <a href="/reviews">レビュー</a>
+        <a href="/category">カテゴリー</a>
+        <a href="/about">ソムリエとは</a>
+        <a href="/reviews" class="nav-cta">人気記事を見る →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-logo">Nonal Sommelier ✦</span>
+      <span class="footer-copy">© 2026 ノンアル・ソムリエ</span>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style>
+.header {
+  background: #fff;
+  border-bottom: 2px solid #E6F1FB;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+}
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+.logo-main {
+  font-size: 16px;
+  font-weight: 700;
+  color: #185FA5;
+  letter-spacing: 0.04em;
+}
+.logo-sub {
+  font-size: 9px;
+  background: #E6F1FB;
+  color: #378ADD;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  width: fit-content;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav a {
+  font-size: 13px;
+  color: #444;
+  font-weight: 600;
+}
+.nav-cta {
+  background: #378ADD;
+  color: #fff !important;
+  padding: 7px 16px;
+  border-radius: 24px;
+  font-size: 12px !important;
+  box-shadow: 0 3px 0 #0C447C;
+}
+.footer {
+  background: #042C53;
+  padding: 1.5rem 0;
+  margin-top: 4rem;
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-logo {
+  font-size: 15px;
+  font-weight: 700;
+  color: #85B7EB;
+}
+.footer-copy {
+  font-size: 11px;
+  color: #378ADD;
+}
+</style>
