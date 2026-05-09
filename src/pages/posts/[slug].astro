@@ -38,11 +38,11 @@ const score = post.fields.score || 0;
       </div>
     </div>
 
-    {post.fields.thumbnail && (
-      <div class="thumbnail">
-        <img src={`https:${post.fields.thumbnail.fields.file.url}`} alt={post.fields.title} />
-      </div>
-    )}
+    {post.fields.thumbnail && post.fields.thumbnail.fields?.file?.url && (
+  <div class="thumbnail">
+    <img src={`https:${post.fields.thumbnail.fields.file.url}`} alt={post.fields.title} />
+  </div>
+)}
 
     {post.fields.excerpt && (
       <div class="excerpt">{post.fields.excerpt}</div>
