@@ -31,3 +31,4 @@ npm run build
 3. Build command: `npm run build`
 4. Build output directory: `dist`
 5. 環境変数にCONTENTFUL_SPACE_IDとCONTENTFUL_ACCESS_TOKENを設定
+6. 
