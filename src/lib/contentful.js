@@ -1,23 +1,7 @@
-import contentful from 'contentful';
-
-export const contentfulClient = contentful.createClient({
-  space: import.meta.env.CONTENTFUL_SPACE_ID,
-  accessToken: import.meta.env.CONTENTFUL_ACCESS_TOKEN,
-});
-
 export async function getBlogPosts() {
-  const entries = await contentfulClient.getEntries({
-    content_type: 'blogPost',
-    order: ['-sys.createdAt'],
-  });
-  return entries.items;
+  return [];
 }
 
 export async function getBlogPost(slug) {
-  const entries = await contentfulClient.getEntries({
-    content_type: 'blogPost',
-    'fields.slug': slug,
-    limit: 1,
-  });
-  return entries.items[0];
+  return null;
 }
