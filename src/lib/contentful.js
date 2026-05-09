@@ -1,5 +1,5 @@
 const SPACE_ID = 'ij2od3p18z0x';
-const ACCESS_TOKEN = 'gjKf7metGzT7YeKgJmEk5THfq8lUcxSfDGcMSYLmKJc';
+const ACCESS_TOKEN = 'MhjFee2bKFrOuG4Y4M_6nQ2fNXr4Cd_iVMldLINZ2a8';
 
 export async function getBlogPosts() {
   try {
