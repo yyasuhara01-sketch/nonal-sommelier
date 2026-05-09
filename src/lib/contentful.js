@@ -1,17 +1,13 @@
-import contentful from 'contentful';
-
-const client = contentful.createClient({
-  space: import.meta.env.CONTENTFUL_SPACE_ID,
-  accessToken: import.meta.env.CONTENTFUL_ACCESS_TOKEN,
-});
+const SPACE_ID = 'ij2od3p18z0x';
+const ACCESS_TOKEN = 'gjKf7metGzT7YeKgJmEk5THfq8lUcxSfDGcMSYLmKJc';
 
 export async function getBlogPosts() {
   try {
-    const entries = await client.getEntries({
-      content_type: 'blogPost',
-      order: ['-sys.createdAt'],
-    });
-    return entries.items;
+    const res = await fetch(
+      `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?content_type=blogPost&order=-sys.createdAt&access_token=${ACCESS_TOKEN}`
+    );
+    const data = await res.json();
+    return data.items || [];
   } catch (e) {
     return [];
   }
@@ -19,12 +15,11 @@ export async function getBlogPosts() {
 
 export async function getBlogPost(slug) {
   try {
-    const entries = await client.getEntries({
-      content_type: 'blogPost',
-      'fields.slug': slug,
-      limit: 1,
-    });
-    return entries.items[0] || null;
+    const res = await fetch(
+      `https://cdn.contentful.com/spaces/${SPACE_ID}/entries?content_type=blogPost&fields.slug=${slug}&access_token=${ACCESS_TOKEN}`
+    );
+    const data = await res.json();
+    return data.items?.[0] || null;
   } catch (e) {
     return null;
   }
