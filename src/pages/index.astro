@@ -94,7 +94,7 @@ const categories = [
         <a href={`/posts/${post.fields.slug}`} class="card">
           <div class="card-img">
             {post.fields.thumbnail
-              ? <img src={`https:${post.fields.thumbnail.fields.file.url}`} alt={post.fields.title} />
+              ? <img src={`https:${(post.fields.thumbnail as any)?.fields?.file?.url ?? ''}`} alt={post.fields.title as string} />
               : <div class="card-img-placeholder"></div>
             }
           </div>
@@ -133,7 +133,7 @@ const categories = [
               <span class="pickup-num">0{i + 1}</span>
               <div class="pickup-img">
                 {post.fields.thumbnail
-                  ? <img src={`https:${post.fields.thumbnail.fields.file.url}`} alt={post.fields.title} />
+                  ? <img src={`https:${(post.fields.thumbnail as any)?.fields?.file?.url ?? ''}`} alt={post.fields.title as string} />
                   : <div class="pickup-img-placeholder"></div>
                 }
               </div>
