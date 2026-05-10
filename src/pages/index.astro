@@ -32,10 +32,10 @@ const categories = [
         <h1 class="hero-title">ノンアルを、もっと<br><span class="accent-red">本気</span>で<span class="accent-blue">楽しもう！</span></h1>
         <p class="hero-desc">ソムリエが本音で評価する、<br>ノンアルドリンク専門メディア。</p>
         <div class="hero-tags">
-          <span class="htag"># ノンアルビール</span>
-          <span class="htag"># ノンアルワイン</span>
-          <span class="htag"># ノンアルカクテル</span>
-          <span class="htag"># スマドリ情報</span>
+          <a href="/category/beer" class="htag"># ノンアルビール</a>
+          <a href="/category/wine" class="htag"># ノンアルワイン</a>
+          <a href="/category/cocktail" class="htag"># ノンアルカクテル</a>
+          <a href="/category/smartdrinking" class="htag"># スマドリ情報</a>
         </div>
         <div class="hero-btns">
           <a href="/reviews" class="hero-btn">人気記事を見る→</a>
@@ -48,23 +48,6 @@ const categories = [
       </div>
     </div>
   </section>
-
-  <!-- Ribbon -->
-  <div class="ribbon">
-    {categories.map(cat => (
-      <span class="ribbon-item">
-        <span class="ribbon-gem"></span>
-        {cat.name}
-      </span>
-    ))}
-    <span class="ribbon-item"><span class="ribbon-gem"></span>クラフト系</span>
-    <span class="ribbon-item"><span class="ribbon-gem"></span>添加物チェック</span>
-  </div>
-
-  <!-- キャッチバナー -->
-  <div class="catch-banner">
-    「しかたなく、ノンアル」ではなく　「あえて、ノンアル」の時代だ！
-  </div>
 
   <!-- Latest Reviews -->
   <section class="section container">
@@ -156,7 +139,7 @@ const categories = [
 </Layout>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Yomogi&family=Zen+Kurenaido&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Yomogi&family=Zen+Kurenaido&display=swap');
 
 .hero {
   background: #fff;
@@ -166,9 +149,10 @@ const categories = [
 .hero-inner {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 0;
+  justify-content: space-between;
 }
-.hero-text { flex: 1; }
+.hero-text { flex: 1; max-width: 540px; }
 .hero-eyebrow {
   display: flex; align-items: center; gap: 8px;
   font-size: 11px; color: #378ADD; font-weight: 700;
@@ -177,53 +161,37 @@ const categories = [
 .eyebrow-line { width: 24px; height: 2px; background: #378ADD; border-radius: 2px; }
 .hero-title {
   font-family: 'Yomogi', cursive;
-  font-size: 36px; color: #042C53;
+  font-size: 42px; color: #042C53;
   line-height: 1.5; margin-bottom: 0.75rem;
 }
 .accent-red { color: #E05A5A; }
 .accent-blue { color: #378ADD; }
 .hero-desc {
   font-family: 'Zen Kurenaido', sans-serif;
-  font-size: 15px; color: #5F5E5A; line-height: 1.9; margin-bottom: 1rem;
+  font-size: 16px; color: #5F5E5A; line-height: 1.9; margin-bottom: 1.25rem;
 }
-.hero-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .htag {
-  font-size: 11px; background: #E6F1FB; color: #185FA5;
-  padding: 6px 16px; border-radius: 20px; font-weight: 700;
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 12px; background: #E6F1FB; color: #185FA5;
+  padding: 8px 18px; border-radius: 30px; font-weight: 700;
+  box-shadow: 0 3px 0 #B5D4F4;
+  display: inline-block; transition: transform 0.1s;
 }
+.htag:hover { transform: translateY(2px); box-shadow: 0 1px 0 #B5D4F4; }
 .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
 .hero-btn {
   font-family: 'Zen Kurenaido', sans-serif;
-  font-size: 13px; font-weight: 700;
+  font-size: 14px; font-weight: 700;
   background: #378ADD; color: #fff;
-  padding: 10px 22px; border-radius: 30px;
+  padding: 12px 24px; border-radius: 30px;
   box-shadow: 0 4px 0 #0C447C;
   transition: transform 0.1s;
   display: inline-block;
 }
 .hero-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 #0C447C; }
-.hero-visual { flex-shrink: 0; width: 420px; }
+.hero-visual { flex-shrink: 0; width: 46%; }
 .toast-img { width: 100%; height: auto; }
-
-.ribbon {
-  background: #185FA5; padding: 0.65rem 2rem;
-  display: flex; gap: 1.5rem; overflow-x: auto;
-}
-.ribbon-item {
-  font-size: 11px; color: #B5D4F4; font-weight: 700;
-  white-space: nowrap; display: flex; align-items: center; gap: 6px;
-}
-.ribbon-gem {
-  width: 7px; height: 7px; background: #85B7EB;
-  transform: rotate(45deg); border-radius: 1px; flex-shrink: 0;
-}
-
-.catch-banner {
-  background: #378ADD; color: #fff;
-  text-align: center; padding: 0.8rem;
-  font-family: 'Zen Kurenaido', sans-serif;
-  font-size: 14px; font-weight: 700; letter-spacing: 0.05em;
-}
 
 .section { padding: 2.5rem 0; }
 .section-head {
