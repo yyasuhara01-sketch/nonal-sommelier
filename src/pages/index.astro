@@ -37,17 +37,17 @@ const categories = [
           <a href="/category/cocktail" class="htag"># ノンアルカクテル</a>
           <a href="/category/smartdrinking" class="htag"># スマドリ情報</a>
         </div>
-        <div class="hero-btns">
-          <a href="/reviews" class="hero-btn">人気記事を見る→</a>
-          <a href="/reviews" class="hero-btn">レビュー記事一覧→</a>
-          <a href="/about" class="hero-btn">ノンアル豆知識→</a>
-        </div>
       </div>
       <div class="hero-visual">
         <img src="/toast.png" alt="乾杯イラスト" class="toast-img" />
       </div>
     </div>
   </section>
+
+  <!-- キャッチバナー -->
+  <div class="catch-banner">
+    「しかたなく、ノンアル」ではなく　「あえて、ノンアル」の時代だ！
+  </div>
 
   <!-- Latest Reviews -->
   <section class="section container">
@@ -143,34 +143,39 @@ const categories = [
 
 .hero {
   background: #fff;
-  padding: 3rem 0 2.5rem;
-  border-bottom: 3px solid #E6F1FB;
+  padding: 2.5rem 0;
 }
 .hero-inner {
   display: flex;
   align-items: center;
-  gap: 0;
   justify-content: space-between;
+  gap: 2rem;
+  min-height: 420px;
 }
-.hero-text { flex: 1; max-width: 540px; }
+.hero-text {
+  flex: 1;
+  max-width: 50%;
+}
 .hero-eyebrow {
   display: flex; align-items: center; gap: 8px;
   font-size: 11px; color: #378ADD; font-weight: 700;
-  letter-spacing: 0.18em; margin-bottom: 0.75rem;
+  letter-spacing: 0.18em; margin-bottom: 1rem;
 }
 .eyebrow-line { width: 24px; height: 2px; background: #378ADD; border-radius: 2px; }
 .hero-title {
   font-family: 'Yomogi', cursive;
-  font-size: 42px; color: #042C53;
-  line-height: 1.5; margin-bottom: 0.75rem;
+  font-size: 44px; color: #042C53;
+  line-height: 1.5; margin-bottom: 1rem;
 }
 .accent-red { color: #E05A5A; }
 .accent-blue { color: #378ADD; }
 .hero-desc {
   font-family: 'Zen Kurenaido', sans-serif;
-  font-size: 16px; color: #5F5E5A; line-height: 1.9; margin-bottom: 1.25rem;
+  font-size: 17px; color: #5F5E5A; line-height: 1.9; margin-bottom: 1.5rem;
 }
-.hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.hero-tags {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
 .htag {
   font-family: 'Zen Kurenaido', sans-serif;
   font-size: 12px; background: #E6F1FB; color: #185FA5;
@@ -179,19 +184,21 @@ const categories = [
   display: inline-block; transition: transform 0.1s;
 }
 .htag:hover { transform: translateY(2px); box-shadow: 0 1px 0 #B5D4F4; }
-.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
-.hero-btn {
-  font-family: 'Zen Kurenaido', sans-serif;
-  font-size: 14px; font-weight: 700;
-  background: #378ADD; color: #fff;
-  padding: 12px 24px; border-radius: 30px;
-  box-shadow: 0 4px 0 #0C447C;
-  transition: transform 0.1s;
-  display: inline-block;
+.hero-visual {
+  flex: 1;
+  max-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.hero-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 #0C447C; }
-.hero-visual { flex-shrink: 0; width: 46%; }
 .toast-img { width: 100%; height: auto; }
+
+.catch-banner {
+  background: #378ADD; color: #fff;
+  text-align: center; padding: 0.9rem;
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.05em;
+}
 
 .section { padding: 2.5rem 0; }
 .section-head {
@@ -269,8 +276,8 @@ const categories = [
 
 @media (max-width: 768px) {
   .hero-inner { flex-direction: column; }
-  .hero-visual { width: 100%; }
+  .hero-text { max-width: 100%; }
+  .hero-visual { max-width: 100%; }
   .cards { grid-template-columns: 1fr; }
-  .hero-btns { flex-direction: column; }
 }
 </style>
