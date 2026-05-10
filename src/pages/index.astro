@@ -117,10 +117,14 @@ const pickupPosts = posts.slice(0, 2);
 
 .hero {
   width: 100%;
-  line-height: 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
 }
 .hero-img {
-  width: 100%;
+  width: 75%;
+  max-width: 900px;
   height: auto;
   display: block;
 }
@@ -207,6 +211,7 @@ const pickupPosts = posts.slice(0, 2);
 .about-desc { font-size: 13px; color: #5F5E5A; line-height: 1.9; }
 
 @media (max-width: 768px) {
+  .hero-img { width: 95%; }
   .cards { grid-template-columns: 1fr; }
 }
 </style>
