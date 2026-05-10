@@ -21,9 +21,9 @@ const { title = 'ノンアル・ソムリエ | Nonal Sommelier' } = Astro.props;
         </div>
       </a>
       <nav class="nav">
-        <a href="/reviews">レビュー</a>
-        <a href="/category">カテゴリー</a>
-        <a href="/about">ソムリエとは</a>
+        <a href="/reviews" class="nav-btn">人気記事を見る→</a>
+        <a href="/reviews" class="nav-btn">レビュー記事一覧→</a>
+        <a href="/about" class="nav-btn">ノンアル豆知識→</a>
       </nav>
     </div>
   </header>
@@ -39,6 +39,8 @@ const { title = 'ノンアル・ソムリエ | Nonal Sommelier' } = Astro.props;
 </body>
 </html>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Yomogi&family=Zen+Kurenaido&display=swap');
+
 .header {
   background: #fff;
   border-bottom: 2px solid #E6F1FB;
@@ -96,13 +98,22 @@ const { title = 'ノンアル・ソムリエ | Nonal Sommelier' } = Astro.props;
 .nav {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 12px;
 }
-.nav a {
+.nav-btn {
+  font-family: 'Zen Kurenaido', sans-serif;
   font-size: 13px;
-  color: #444;
-  font-weight: 600;
+  font-weight: 700;
+  background: #378ADD;
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 0 #0C447C;
+  transition: transform 0.1s;
+  display: inline-block;
+  white-space: nowrap;
 }
+.nav-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 #0C447C; }
 .footer {
   background: #042C53;
   padding: 1.5rem 0;
@@ -121,5 +132,8 @@ const { title = 'ノンアル・ソムリエ | Nonal Sommelier' } = Astro.props;
 .footer-copy {
   font-size: 11px;
   color: #378ADD;
+}
+@media (max-width: 768px) {
+  .nav-btn { font-size: 11px; padding: 8px 12px; }
 }
 </style>
