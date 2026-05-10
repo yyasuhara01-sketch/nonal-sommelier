@@ -15,15 +15,13 @@ const pickupPosts = posts.slice(0, 2);
 const categories = [
   { name: 'ノンアルワイン', slug: 'wine' },
   { name: 'ノンアルビール', slug: 'beer' },
-  { name: 'カクテル系', slug: 'cocktail' },
+  { name: 'ノンアルカクテル', slug: 'cocktail' },
   { name: 'スマドリ情報', slug: 'smartdrinking' },
 ];
 ---
 <Layout>
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-deco1"></div>
-    <div class="hero-deco2"></div>
     <div class="container hero-inner">
       <div class="hero-text">
         <div class="hero-eyebrow">
@@ -31,41 +29,22 @@ const categories = [
           SOMMELIER'S HONEST REVIEW
           <span class="eyebrow-line"></span>
         </div>
-        <h1 class="hero-title">ノンアルを、もっと<br><span class="accent">真剣に</span>選ぼう。</h1>
-        <p class="hero-desc">資格を持つソムリエが、味・香り・成分を<br>本音で評価するノンアルドリンク専門メディア。</p>
+        <h1 class="hero-title">ノンアルを、もっと<br><span class="accent-red">本気</span>で<span class="accent-blue">楽しもう！</span></h1>
+        <p class="hero-desc">ソムリエが本音で評価する、<br>ノンアルドリンク専門メディア。</p>
         <div class="hero-tags">
-          <span class="htag"># ノンアルワイン</span>
           <span class="htag"># ノンアルビール</span>
-          <span class="htag"># スマドリ</span>
-          <span class="htag"># 添加物チェック</span>
+          <span class="htag"># ノンアルワイン</span>
+          <span class="htag"># ノンアルカクテル</span>
+          <span class="htag"># スマドリ情報</span>
+        </div>
+        <div class="hero-btns">
+          <a href="/reviews" class="hero-btn">人気記事を見る→</a>
+          <a href="/reviews" class="hero-btn">レビュー記事一覧→</a>
+          <a href="/about" class="hero-btn">ノンアル豆知識→</a>
         </div>
       </div>
       <div class="hero-visual">
-        <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg" width="200" height="180">
-          <rect x="30" y="30" width="28" height="8" rx="4" fill="#185FA5"/>
-          <rect x="26" y="38" width="36" height="80" rx="10" fill="#185FA5"/>
-          <rect x="30" y="55" width="28" height="4" rx="2" fill="#B5D4F4" opacity="0.5"/>
-          <rect x="29" y="74" width="30" height="24" rx="4" fill="#fff" opacity="0.9"/>
-          <rect x="32" y="77" width="24" height="2" rx="1" fill="#185FA5" opacity="0.5"/>
-          <rect x="34" y="81" width="20" height="1.5" rx="0.75" fill="#378ADD" opacity="0.4"/>
-          <rect x="82" y="50" width="34" height="68" rx="8" fill="#378ADD"/>
-          <rect x="82" y="50" width="34" height="12" rx="8" fill="#0C447C"/>
-          <rect x="82" y="108" width="34" height="10" rx="8" fill="#0C447C"/>
-          <rect x="87" y="68" width="22" height="30" rx="4" fill="#fff" opacity="0.15"/>
-          <path d="M130 40 L148 40 L144 80 L136 80 Z" fill="#E6F1FB" opacity="0.8"/>
-          <path d="M132 58 L146 58 L144 80 L136 80 Z" fill="#85B7EB" opacity="0.5"/>
-          <rect x="136" y="80" width="8" height="18" rx="2" fill="#B5D4F4" opacity="0.7"/>
-          <rect x="130" y="98" width="20" height="4" rx="2" fill="#B5D4F4" opacity="0.6"/>
-          <circle cx="55" cy="25" r="4" fill="#B5D4F4" opacity="0.4"/>
-          <circle cx="65" cy="18" r="3" fill="#85B7EB" opacity="0.3"/>
-          <circle cx="105" cy="42" r="5" fill="#B5D4F4" opacity="0.3"/>
-          <circle cx="115" cy="35" r="3" fill="#85B7EB" opacity="0.25"/>
-          <circle cx="145" cy="32" r="3.5" fill="#B5D4F4" opacity="0.25"/>
-          <rect x="130" y="115" width="56" height="44" rx="12" fill="#fff" stroke="#B5D4F4" stroke-width="1.5"/>
-          <text x="158" y="133" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#185FA5">4.5</text>
-          <text x="158" y="146" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#888">ソムリエスコア</text>
-          <text x="158" y="156" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#378ADD">★★★★★</text>
-        </svg>
+        <img src="/toast.png" alt="乾杯イラスト" class="toast-img" />
       </div>
     </div>
   </section>
@@ -80,6 +59,11 @@ const categories = [
     ))}
     <span class="ribbon-item"><span class="ribbon-gem"></span>クラフト系</span>
     <span class="ribbon-item"><span class="ribbon-gem"></span>添加物チェック</span>
+  </div>
+
+  <!-- キャッチバナー -->
+  <div class="catch-banner">
+    「しかたなく、ノンアル」ではなく　「あえて、ノンアル」の時代だ！
   </div>
 
   <!-- Latest Reviews -->
@@ -172,29 +156,17 @@ const categories = [
 </Layout>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Yomogi&family=Zen+Kurenaido&display=swap');
+
 .hero {
   background: #fff;
   padding: 3rem 0 2.5rem;
   border-bottom: 3px solid #E6F1FB;
-  position: relative;
-  overflow: hidden;
-}
-.hero-deco1 {
-  position: absolute; top: -40px; right: 280px;
-  width: 200px; height: 200px;
-  background: #E6F1FB; border-radius: 50%;
-}
-.hero-deco2 {
-  position: absolute; bottom: -30px; right: 80px;
-  width: 120px; height: 120px;
-  background: #f0f7ff; border-radius: 50%;
 }
 .hero-inner {
   display: flex;
   align-items: center;
   gap: 2rem;
-  position: relative;
-  z-index: 1;
 }
 .hero-text { flex: 1; }
 .hero-eyebrow {
@@ -204,17 +176,34 @@ const categories = [
 }
 .eyebrow-line { width: 24px; height: 2px; background: #378ADD; border-radius: 2px; }
 .hero-title {
-  font-size: 28px; font-weight: 700; color: #042C53;
-  line-height: 1.45; margin-bottom: 0.75rem;
+  font-family: 'Yomogi', cursive;
+  font-size: 36px; color: #042C53;
+  line-height: 1.5; margin-bottom: 0.75rem;
 }
-.hero-title .accent { color: #378ADD; }
-.hero-desc { font-size: 13px; color: #5F5E5A; line-height: 1.9; margin-bottom: 1rem; }
-.hero-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.accent-red { color: #E05A5A; }
+.accent-blue { color: #378ADD; }
+.hero-desc {
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 15px; color: #5F5E5A; line-height: 1.9; margin-bottom: 1rem;
+}
+.hero-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .htag {
   font-size: 11px; background: #E6F1FB; color: #185FA5;
-  padding: 4px 12px; border-radius: 20px; font-weight: 700;
+  padding: 6px 16px; border-radius: 20px; font-weight: 700;
 }
-.hero-visual { flex-shrink: 0; }
+.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-btn {
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 13px; font-weight: 700;
+  background: #378ADD; color: #fff;
+  padding: 10px 22px; border-radius: 30px;
+  box-shadow: 0 4px 0 #0C447C;
+  transition: transform 0.1s;
+  display: inline-block;
+}
+.hero-btn:hover { transform: translateY(2px); box-shadow: 0 2px 0 #0C447C; }
+.hero-visual { flex-shrink: 0; width: 420px; }
+.toast-img { width: 100%; height: auto; }
 
 .ribbon {
   background: #185FA5; padding: 0.65rem 2rem;
@@ -227,6 +216,13 @@ const categories = [
 .ribbon-gem {
   width: 7px; height: 7px; background: #85B7EB;
   transform: rotate(45deg); border-radius: 1px; flex-shrink: 0;
+}
+
+.catch-banner {
+  background: #378ADD; color: #fff;
+  text-align: center; padding: 0.8rem;
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.05em;
 }
 
 .section { padding: 2.5rem 0; }
@@ -305,8 +301,8 @@ const categories = [
 
 @media (max-width: 768px) {
   .hero-inner { flex-direction: column; }
-  .hero-visual { display: none; }
+  .hero-visual { width: 100%; }
   .cards { grid-template-columns: 1fr; }
-  .nav a:not(.nav-cta) { display: none; }
+  .hero-btns { flex-direction: column; }
 }
 </style>
