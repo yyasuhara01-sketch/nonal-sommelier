@@ -11,37 +11,11 @@ try {
 
 const latestPosts = posts.slice(0, 3);
 const pickupPosts = posts.slice(0, 2);
-
-const categories = [
-  { name: 'ノンアルワイン', slug: 'wine' },
-  { name: 'ノンアルビール', slug: 'beer' },
-  { name: 'ノンアルカクテル', slug: 'cocktail' },
-  { name: 'スマドリ情報', slug: 'smartdrinking' },
-];
 ---
 <Layout>
   <!-- Hero -->
   <section class="hero">
-    <div class="container hero-inner">
-      <div class="hero-text">
-        <div class="hero-eyebrow">
-          <span class="eyebrow-line"></span>
-          SOMMELIER'S HONEST REVIEW
-          <span class="eyebrow-line"></span>
-        </div>
-        <h1 class="hero-title">ノンアルを、もっと<br><span class="accent-red">本気</span>で<span class="accent-blue">楽しもう！</span></h1>
-        <p class="hero-desc">ソムリエが本音で評価する、<br>ノンアルドリンク専門メディア。</p>
-        <div class="hero-tags">
-          <a href="/category/beer" class="htag"># ノンアルビール</a>
-          <a href="/category/wine" class="htag"># ノンアルワイン</a>
-          <a href="/category/cocktail" class="htag"># ノンアルカクテル</a>
-          <a href="/category/smartdrinking" class="htag"># スマドリ情報</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <img src="/toast.png" alt="乾杯イラスト" class="toast-img" />
-      </div>
-    </div>
+    <img src="/hero.png" alt="ノンアルを、もっと本気で楽しもう！" class="hero-img" />
   </section>
 
   <!-- キャッチバナー -->
@@ -139,60 +113,17 @@ const categories = [
 </Layout>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Yomogi&family=Zen+Kurenaido&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Zen+Kurenaido&display=swap');
 
 .hero {
-  background: #fff;
-  padding: 1.5rem 0;
+  width: 100%;
+  line-height: 0;
 }
-.hero-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
-.hero-text {
-  flex: 1;
-  min-width: 0;
-}
-.hero-eyebrow {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 13px; color: #378ADD; font-weight: 700;
-  letter-spacing: 0.18em; margin-bottom: 1rem;
-}
-.eyebrow-line { width: 28px; height: 2px; background: #378ADD; border-radius: 2px; }
-.hero-title {
-  font-family: 'Yomogi', cursive;
-  font-size: clamp(40px, 4.5vw, 64px);
-  color: #042C53;
-  line-height: 1.45;
-  margin-bottom: 1rem;
-}
-.accent-red { color: #E05A5A; }
-.accent-blue { color: #378ADD; }
-.hero-desc {
-  font-family: 'Zen Kurenaido', sans-serif;
-  font-size: clamp(18px, 2vw, 24px);
-  color: #5F5E5A;
-  line-height: 1.9;
-  margin-bottom: 1.5rem;
-}
-.hero-tags {
-  display: flex; gap: 10px; flex-wrap: wrap;
-}
-.htag {
-  font-family: 'Zen Kurenaido', sans-serif;
-  font-size: 15px; background: #E6F1FB; color: #185FA5;
-  padding: 10px 20px; border-radius: 30px; font-weight: 700;
-  box-shadow: 0 4px 0 #B5D4F4;
-  display: inline-block; transition: transform 0.1s;
-}
-.htag:hover { transform: translateY(2px); box-shadow: 0 2px 0 #B5D4F4; }
-.hero-visual {
-  flex-shrink: 0;
-  width: 42%;
-}
-.toast-img { width: 100%; height: auto; display: block; }
 
 .catch-banner {
   background: #378ADD; color: #fff;
@@ -276,8 +207,6 @@ const categories = [
 .about-desc { font-size: 13px; color: #5F5E5A; line-height: 1.9; }
 
 @media (max-width: 768px) {
-  .hero-inner { flex-direction: column; }
-  .hero-visual { width: 100%; }
   .cards { grid-template-columns: 1fr; }
 }
 </style>
