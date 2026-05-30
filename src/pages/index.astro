@@ -10,7 +10,7 @@ try {
 }
 
 const latestPosts = posts.slice(0, 3);
-const pickupPosts = posts.slice(0, 2);
+const pickupPosts = posts.filter((post: any) => post.fields.pickup === true).slice(0, 3);
 ---
 <Layout>
   <!-- Hero -->
@@ -31,7 +31,7 @@ const pickupPosts = posts.slice(0, 2);
       <span class="section-line"></span>
     </div>
     <div class="cards">
-      {latestPosts.length > 0 ? latestPosts.map(post => (
+      {latestPosts.length > 0 ? latestPosts.map((post: any) => (
         <a href={`/posts/${post.fields.slug}`} class="card">
           <div class="card-img">
             {post.fields.thumbnail
@@ -42,7 +42,7 @@ const pickupPosts = posts.slice(0, 2);
           <div class="card-body">
             <span class="card-tag">{post.fields.category || 'レビュー'}</span>
             <div class="stars">
-              {[1,2,3,4,5].map(i => (
+              {[1,2,3,4,5].map((i: number) => (
                 <span class={i <= (post.fields.score || 0) ? 's' : 'se'}></span>
               ))}
             </div>
@@ -57,38 +57,44 @@ const pickupPosts = posts.slice(0, 2);
         <p class="no-posts">記事を準備中です。お楽しみに！</p>
       )}
     </div>
+    <div class="more-wrap">
+      <a href="/reviews" class="more-btn">もっと見る →</a>
+    </div>
   </section>
 
   <!-- Sommelier's Pick -->
-  {pickupPosts.length > 0 && (
-    <section class="pickup-section">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-en">Sommelier's Pick</span>
-          <span class="section-ja">ソムリエおすすめ</span>
-          <span class="section-line" style="background:#B5D4F4;"></span>
-        </div>
-        <div class="pickup-list">
-          {pickupPosts.map((post, i) => (
-            <a href={`/posts/${post.fields.slug}`} class="pickup-card">
-              <span class="pickup-num">0{i + 1}</span>
-              <div class="pickup-img">
-                {post.fields.thumbnail
-                  ? <img src={`https:${(post.fields.thumbnail as any)?.fields?.file?.url ?? ''}`} alt={post.fields.title as string} />
-                  : <div class="pickup-img-placeholder"></div>
-                }
-              </div>
-              <div class="pickup-text">
-                <span class="pickup-tag">{post.fields.category || 'レビュー'}</span>
-                <p class="pickup-title">{post.fields.title}</p>
-              </div>
-              <span class="pickup-score">★ {post.fields.score || '-'}</span>
-            </a>
-          ))}
-        </div>
+  <section class="pickup-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-en">Sommelier's Pick</span>
+        <span class="section-ja">ソムリエおすすめ</span>
+        <span class="section-line" style="background:#B5D4F4;"></span>
       </div>
-    </section>
-  )}
+      <div class="pickup-list">
+        {pickupPosts.length > 0 ? pickupPosts.map((post: any, i: number) => (
+          <a href={`/posts/${post.fields.slug}`} class="pickup-card">
+            <span class="pickup-num">0{i + 1}</span>
+            <div class="pickup-img">
+              {post.fields.thumbnail
+                ? <img src={`https:${(post.fields.thumbnail as any)?.fields?.file?.url ?? ''}`} alt={post.fields.title as string} />
+                : <div class="pickup-img-placeholder"></div>
+              }
+            </div>
+            <div class="pickup-text">
+              <span class="pickup-tag">{post.fields.category || 'レビュー'}</span>
+              <p class="pickup-title">{post.fields.title}</p>
+            </div>
+            <span class="pickup-score">★ {post.fields.score || '-'}</span>
+          </a>
+        )) : (
+          <p class="no-posts">おすすめ記事を準備中です。お楽しみに！</p>
+        )}
+      </div>
+      <div class="more-wrap">
+        <a href="/pickup" class="more-btn">もっと見る →</a>
+      </div>
+    </div>
+  </section>
 
   <!-- About -->
   <section class="about-section container">
@@ -98,15 +104,18 @@ const pickupPosts = posts.slice(0, 2);
       <span class="section-line"></span>
     </div>
     <div class="about-card">
-      <div class="avatar">Y</div>
+      <div class="avatar-wrap">
+        <img src="/prof.png" alt="YUKA" class="avatar-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="avatar-fallback">Y</div>
+      </div>
       <div class="about-text">
         <p class="about-name">YUKA</p>
         <div class="about-certs">
-          <span class="cert">ワインエキスパート</span>
-          <span class="cert">食品系資格保有</span>
-          <span class="cert">製菓衛生師</span>
+          <span class="cert">ソムリエ</span>
+          <span class="cert">調理師</span>
+          <span class="cert">その他食品系資格</span>
         </div>
-        <p class="about-desc">複数の専門資格を持つソムリエが、ノンアルコールドリンクを味・香り・成分すべての観点から正直にレビュー。「本当に美味しいノンアル」だけをお届けします。</p>
+        <p class="about-desc">ソムリエ、調理師の経験を活かし、ノンアルコールドリンクを味・香り・成分さまざまな観点から正直にレビュー。美味しく楽しいノンアル生活に役立つ情報を発信します。</p>
       </div>
     </div>
   </section>
@@ -145,17 +154,17 @@ const pickupPosts = posts.slice(0, 2);
 .section-line { flex: 1; height: 2px; background: #E6F1FB; border-radius: 2px; }
 
 .cards {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
 }
 .card {
   background: #fff; border: 2px solid #E6F1FB; border-radius: 16px;
   overflow: hidden; display: block; transition: transform 0.15s;
 }
 .card:hover { transform: translateY(-2px); }
-.card-img { height: 140px; overflow: hidden; }
+.card-img { height: 160px; overflow: hidden; }
 .card-img img { width: 100%; height: 100%; object-fit: cover; }
 .card-img-placeholder { width: 100%; height: 100%; background: #E6F1FB; }
-.card-body { padding: 0.9rem; }
+.card-body { padding: 1rem; }
 .card-tag {
   font-size: 10px; color: #185FA5; background: #E6F1FB;
   padding: 3px 10px; border-radius: 20px; font-weight: 700;
@@ -163,11 +172,23 @@ const pickupPosts = posts.slice(0, 2);
 .stars { display: flex; gap: 2px; margin: 6px 0; }
 .s { width: 11px; height: 11px; background: #378ADD; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
 .se { width: 11px; height: 11px; background: #B5D4F4; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
-.card-title { font-size: 13px; font-weight: 700; color: #042C53; line-height: 1.6; margin-bottom: 6px; }
+.card-title { font-size: 14px; font-weight: 700; color: #042C53; line-height: 1.6; margin-bottom: 8px; }
 .card-bottom { display: flex; justify-content: space-between; align-items: center; }
 .card-meta { font-size: 10px; color: #aaa; }
 .card-score { font-size: 13px; font-weight: 700; color: #185FA5; }
 .no-posts { color: #888; font-size: 14px; grid-column: 1/-1; text-align: center; padding: 2rem; }
+
+.more-wrap { text-align: center; margin-top: 1.5rem; }
+.more-btn {
+  font-family: 'Zen Kurenaido', sans-serif;
+  font-size: 14px; font-weight: 700;
+  background: #fff; color: #378ADD;
+  padding: 10px 32px; border-radius: 30px;
+  border: 2px solid #378ADD;
+  box-shadow: 0 3px 0 #B5D4F4;
+  display: inline-block; transition: transform 0.1s;
+}
+.more-btn:hover { transform: translateY(2px); box-shadow: 0 1px 0 #B5D4F4; }
 
 .pickup-section { background: #E6F1FB; padding: 2.5rem 0; }
 .pickup-list { display: flex; flex-direction: column; gap: 10px; }
@@ -195,14 +216,19 @@ const pickupPosts = posts.slice(0, 2);
   border: 2px solid #E6F1FB; border-radius: 16px; padding: 1.5rem;
   display: flex; gap: 1.5rem; align-items: flex-start; background: #fff;
 }
-.avatar {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: #185FA5; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; font-weight: 700; color: #fff;
+.avatar-wrap { flex-shrink: 0; }
+.avatar-img {
+  width: 80px; height: 80px; border-radius: 50%;
+  object-fit: cover; border: 3px solid #B5D4F4;
+}
+.avatar-fallback {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: #185FA5; display: none;
+  align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 700; color: #fff;
   border: 3px solid #B5D4F4;
 }
-.about-name { font-size: 16px; font-weight: 700; color: #042C53; margin-bottom: 8px; }
+.about-name { font-size: 18px; font-weight: 700; color: #042C53; margin-bottom: 8px; }
 .about-certs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
 .cert {
   font-size: 10px; background: #E6F1FB; color: #185FA5;
