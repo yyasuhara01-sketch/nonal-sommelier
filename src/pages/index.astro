@@ -1,0 +1,131 @@
+---
+import Layout from '../components/Layout.astro';
+import { getBlogPosts } from '../lib/contentful.js';
+
+let posts = [];
+try {
+  posts = await getBlogPosts();
+} catch (e) {
+  posts = [];
+}
+
+const latestPosts = posts.slice(0, 3);
+const pickupPosts = posts.filter((post: any) => post.fields.pickup === true).slice(0, 3);
+---
+<Layout>
+  <!-- Hero -->
+  <section class="hero">
+    <img src="/hero.png" alt="ノンアルを、もっと本気で楽しもう！" class="hero-img" />
+  </section>
+
+  <!-- キャッチバナー -->
+  <div class="catch-banner">
+    「しかたなく、ノンアル」ではなく　「あえて、ノンアル」の時代だ！
+  </div>
+
+  <!-- Latest Reviews -->
+  <section class="section container">
+    <div class="section-head">
+      <span class="section-en">Latest Review</span>
+      <span class="section-ja">最新レビュー</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="cards">
+      {latestPosts.length > 0 ? latestPosts.map((post: any) => (
+        <a href={`/posts/${post.fields.slug}`} class="card">
+          <div class="card-img">
+            {post.fields.thumbnail
+              ? <img src={`https:${(post.fields.thumbnail as any)?.fields?.file?.url ?? ''}`} alt={post.fields.title as string} />
+              : <div class="card-img-placeholder"></div>
+            }
+          </div>
+          <div class="card-body">
+            <span class="card-tag">{post.fields.category || 'レビュー'}</span>
+            <div class="stars">
+              {[1,2,3,4,5].map((i: number) => (
+                <span class={i <= (post.fields.score || 0) ? 's' : 'se'}></span>
+              ))}
+            </div>
+            <h3 class="card-title">{post.fields.title}</h3>
+            <div class="card-bottom">
+              <span class="card-meta">{new Date(post.sys.createdAt).toLocaleDateString('ja-JP')}</span>
+              <span class="card-score">{post.fields.score || '-'} / 5</span>
+            </div>
+          </div>
+        </a>
+      )) : (
+        <p class="no-posts">記事を準備中です。お楽しみに！</p>
+      )}
+    </div>
+    <div class="more-wrap">
+      <a href="/reviews" class="more-btn">もっと見る →</a>
+    </div>
+  </section>
+
+  <!-- Sommelier's Pick -->
+  <section class="pickup-section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-en">Sommelier's Pick</span>
+        <span class="section-ja">ソムリエおすすめ</span>
+        <span class="section-line" style="background:#B5D4F4;"></span>
+      </div>
+      <div class="pickup-list">
+        {pickupPosts.length > 0 ? pickupPosts.map((post: any, i: number) => (
+          <a href={`/posts/${post.fields.slug}`} class="pickup-card">
+            <span class="pickup-num">0{i + 1}</span>
+            <div class="pickup-img">
+              {post.fields.thumbnail
+                ? <img src={`https:${(post.fields.thumbnail as any)?.fields?.file?.url ?? ''}`} alt={post.fields.title as string} />
+                : <div class="pickup-img-placeholder"></div>
+              }
+            </div>
+            <div class="pickup-text">
+              <span class="pickup-tag">{post.fields.category || 'レビュー'}</span>
+              <p class="pickup-title">{post.fields.title}</p>
+            </div>
+            <span class="pickup-score">★ {post.fields.score || '-'}</span>
+          </a>
+        )) : (
+          <p class="no-posts">おすすめ記事を準備中です。お楽しみに！</p>
+        )}
+      </div>
+      <div class="more-wrap">
+        <a href="/pickup" class="more-btn">もっと見る →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about-section container">
+    <div class="section-head">
+      <span class="section-en">About</span>
+      <span class="section-ja">このサイトについて</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="about-card">
+      <div class="avatar-wrap">
+        <img src="/prof.png" alt="YUKA" class="avatar-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="avatar-fallback">Y</div>
+      </div>
+      <div class="about-text">
+        <p class="about-name">YUKA</p>
+        <div class="about-certs">
+          <span class="cert">ソムリエ</span>
+          <span class="cert">調理師</span>
+          <span class="cert">その他食品系資格</span>
+        </div>
+        <p class="about-desc">ソムリエ、調理師の経験を活かし、ノンアルコールドリンクを味・香り・成分さまざまな観点から正直にレビュー。美味しく楽しいノンアル生活に役立つ情報を発信します。</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Zen+Kurenaido&display=swap');
+
+.hero {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-
